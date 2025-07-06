@@ -1,0 +1,310 @@
+-- Roblox Walkspeed Script dengan UI Modern
+-- Compatible dengan Delta Executor
+-- Created by Assistant
+
+-- Services
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+-- Variables
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+local DefaultWalkspeed = 16
+local CurrentWalkspeed = DefaultWalkspeed
+local UIVisible = true
+
+-- Membuat ScreenGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "WalkspeedGUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Parent = game:GetService("CoreGui") or LocalPlayer:WaitForChild("PlayerGui")
+
+-- Main Frame
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0, 300, 0, 200)
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = ScreenGui
+
+-- Membuat rounded corners
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = MainFrame
+
+-- Shadow Effect
+local Shadow = Instance.new("ImageLabel")
+Shadow.Name = "Shadow"
+Shadow.Size = UDim2.new(1, 30, 1, 30)
+Shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+Shadow.BackgroundTransparency = 1
+Shadow.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
+Shadow.ImageColor3 = Color3.new(0, 0, 0)
+Shadow.ImageTransparency = 0.5
+Shadow.ScaleType = Enum.ScaleType.Slice
+Shadow.SliceCenter = Rect.new(10, 10, 10, 10)
+Shadow.ZIndex = -1
+Shadow.Parent = MainFrame
+
+-- Title Bar
+local TitleBar = Instance.new("Frame")
+TitleBar.Name = "TitleBar"
+TitleBar.Size = UDim2.new(1, 0, 0, 40)
+TitleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+TitleBar.BorderSizePixel = 0
+TitleBar.Parent = MainFrame
+
+local TitleCorner = Instance.new("UICorner")
+TitleCorner.CornerRadius = UDim.new(0, 12)
+TitleCorner.Parent = TitleBar
+
+-- Fix untuk rounded corner di bottom
+local TitleFix = Instance.new("Frame")
+TitleFix.Size = UDim2.new(1, 0, 0, 10)
+TitleFix.Position = UDim2.new(0, 0, 1, -10)
+TitleFix.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+TitleFix.BorderSizePixel = 0
+TitleFix.Parent = TitleBar
+
+-- Title Text
+local TitleText = Instance.new("TextLabel")
+TitleText.Name = "TitleText"
+TitleText.Size = UDim2.new(1, -40, 1, 0)
+TitleText.Position = UDim2.new(0, 10, 0, 0)
+TitleText.BackgroundTransparency = 1
+TitleText.Text = "Walkspeed Controller"
+TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleText.TextScaled = true
+TitleText.TextXAlignment = Enum.TextXAlignment.Left
+TitleText.Font = Enum.Font.SourceSansBold
+TitleText.Parent = TitleBar
+
+-- Close Button
+local CloseButton = Instance.new("TextButton")
+CloseButton.Name = "CloseButton"
+CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Position = UDim2.new(1, -35, 0.5, -15)
+CloseButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+CloseButton.Text = "×"
+CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseButton.TextScaled = true
+CloseButton.Font = Enum.Font.SourceSansBold
+CloseButton.BorderSizePixel = 0
+CloseButton.Parent = TitleBar
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0, 6)
+CloseCorner.Parent = CloseButton
+
+-- Content Frame
+local ContentFrame = Instance.new("Frame")
+ContentFrame.Name = "ContentFrame"
+ContentFrame.Size = UDim2.new(1, -20, 1, -60)
+ContentFrame.Position = UDim2.new(0, 10, 0, 50)
+ContentFrame.BackgroundTransparency = 1
+ContentFrame.Parent = MainFrame
+
+-- Speed Label
+local SpeedLabel = Instance.new("TextLabel")
+SpeedLabel.Name = "SpeedLabel"
+SpeedLabel.Size = UDim2.new(1, 0, 0, 30)
+SpeedLabel.Position = UDim2.new(0, 0, 0, 0)
+SpeedLabel.BackgroundTransparency = 1
+SpeedLabel.Text = "Current Speed: " .. CurrentWalkspeed
+SpeedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedLabel.TextScaled = true
+SpeedLabel.Font = Enum.Font.SourceSans
+SpeedLabel.Parent = ContentFrame
+
+-- Slider Background
+local SliderBG = Instance.new("Frame")
+SliderBG.Name = "SliderBackground"
+SliderBG.Size = UDim2.new(1, 0, 0, 20)
+SliderBG.Position = UDim2.new(0, 0, 0, 40)
+SliderBG.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+SliderBG.BorderSizePixel = 0
+SliderBG.Parent = ContentFrame
+
+local SliderBGCorner = Instance.new("UICorner")
+SliderBGCorner.CornerRadius = UDim.new(0, 10)
+SliderBGCorner.Parent = SliderBG
+
+-- Slider Fill
+local SliderFill = Instance.new("Frame")
+SliderFill.Name = "SliderFill"
+SliderFill.Size = UDim2.new((CurrentWalkspeed - 0) / 200, 0, 1, 0)
+SliderFill.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+SliderFill.BorderSizePixel = 0
+SliderFill.Parent = SliderBG
+
+local SliderFillCorner = Instance.new("UICorner")
+SliderFillCorner.CornerRadius = UDim.new(0, 10)
+SliderFillCorner.Parent = SliderFill
+
+-- Slider Button
+local SliderButton = Instance.new("Frame")
+SliderButton.Name = "SliderButton"
+SliderButton.Size = UDim2.new(0, 20, 0, 20)
+SliderButton.Position = UDim2.new((CurrentWalkspeed - 0) / 200, -10, 0.5, -10)
+SliderButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SliderButton.BorderSizePixel = 0
+SliderButton.Parent = SliderBG
+
+local SliderButtonCorner = Instance.new("UICorner")
+SliderButtonCorner.CornerRadius = UDim.new(1, 0)
+SliderButtonCorner.Parent = SliderButton
+
+-- Reset Button
+local ResetButton = Instance.new("TextButton")
+ResetButton.Name = "ResetButton"
+ResetButton.Size = UDim2.new(0.45, 0, 0, 35)
+ResetButton.Position = UDim2.new(0, 0, 0, 80)
+ResetButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+ResetButton.Text = "Reset"
+ResetButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ResetButton.TextScaled = true
+ResetButton.Font = Enum.Font.SourceSans
+ResetButton.BorderSizePixel = 0
+ResetButton.Parent = ContentFrame
+
+local ResetCorner = Instance.new("UICorner")
+ResetCorner.CornerRadius = UDim.new(0, 8)
+ResetCorner.Parent = ResetButton
+
+-- Apply Button
+local ApplyButton = Instance.new("TextButton")
+ApplyButton.Name = "ApplyButton"
+ApplyButton.Size = UDim2.new(0.45, 0, 0, 35)
+ApplyButton.Position = UDim2.new(0.55, 0, 0, 80)
+ApplyButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+ApplyButton.Text = "Apply"
+ApplyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ApplyButton.TextScaled = true
+ApplyButton.Font = Enum.Font.SourceSans
+ApplyButton.BorderSizePixel = 0
+ApplyButton.Parent = ContentFrame
+
+local ApplyCorner = Instance.new("UICorner")
+ApplyCorner.CornerRadius = UDim.new(0, 8)
+ApplyCorner.Parent = ApplyButton
+
+-- Toggle UI Label
+local ToggleLabel = Instance.new("TextLabel")
+ToggleLabel.Name = "ToggleLabel"
+ToggleLabel.Size = UDim2.new(1, 0, 0, 20)
+ToggleLabel.Position = UDim2.new(0, 0, 1, -20)
+ToggleLabel.BackgroundTransparency = 1
+ToggleLabel.Text = "Press [RightShift] to toggle UI"
+ToggleLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+ToggleLabel.TextScaled = true
+ToggleLabel.Font = Enum.Font.SourceSans
+ToggleLabel.Parent = MainFrame
+
+-- Functions
+local function UpdateWalkspeed(speed)
+    CurrentWalkspeed = math.clamp(speed, 0, 200)
+    SpeedLabel.Text = "Current Speed: " .. math.floor(CurrentWalkspeed)
+    
+    local percentage = (CurrentWalkspeed - 0) / 200
+    SliderFill.Size = UDim2.new(percentage, 0, 1, 0)
+    SliderButton.Position = UDim2.new(percentage, -10, 0.5, -10)
+end
+
+local function ApplyWalkspeed()
+    if Humanoid then
+        Humanoid.WalkSpeed = CurrentWalkspeed
+    end
+end
+
+local function ResetWalkspeed()
+    UpdateWalkspeed(DefaultWalkspeed)
+    ApplyWalkspeed()
+end
+
+local function ToggleUI()
+    UIVisible = not UIVisible
+    MainFrame.Visible = UIVisible
+end
+
+-- Slider functionality
+local dragging = false
+
+SliderBG.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+    end
+end)
+
+SliderButton.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local mouse = UserInputService:GetMouseLocation()
+        local relativeX = mouse.X - SliderBG.AbsolutePosition.X
+        local percentage = math.clamp(relativeX / SliderBG.AbsoluteSize.X, 0, 1)
+        local speed = percentage * 200
+        UpdateWalkspeed(speed)
+    end
+end)
+
+-- Button connections
+ResetButton.MouseButton1Click:Connect(ResetWalkspeed)
+ApplyButton.MouseButton1Click:Connect(ApplyWalkspeed)
+CloseButton.MouseButton1Click:Connect(ToggleUI)
+
+-- Toggle UI dengan RightShift
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.RightShift then
+        ToggleUI()
+    end
+end)
+
+-- Character respawn handler
+LocalPlayer.CharacterAdded:Connect(function(newCharacter)
+    Character = newCharacter
+    Humanoid = Character:WaitForChild("Humanoid")
+    ApplyWalkspeed()
+end)
+
+-- Button hover effects
+local function ButtonHover(button, normalColor, hoverColor)
+    button.MouseEnter:Connect(function()
+        TweenService:Create(button, TweenInfo.new(0.2), {BackgroundColor3 = hoverColor}):Play()
+    end)
+    
+    button.MouseLeave:Connect(function()
+        TweenService:Create(button, TweenInfo.new(0.2), {BackgroundColor3 = normalColor}):Play()
+    end)
+end
+
+ButtonHover(ResetButton, Color3.fromRGB(60, 60, 60), Color3.fromRGB(80, 80, 80))
+ButtonHover(ApplyButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230))
+ButtonHover(CloseButton, Color3.fromRGB(255, 50, 50), Color3.fromRGB(255, 80, 80))
+
+-- Initial setup
+UpdateWalkspeed(DefaultWalkspeed)
+
+-- Notification
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Walkspeed Script",
+    Text = "Successfully loaded! Press RightShift to toggle UI",
+    Duration = 5
+})
