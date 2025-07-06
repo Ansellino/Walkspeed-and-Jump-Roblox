@@ -1,18 +1,18 @@
--- Roblox Walkspeed Script dengan UI Modern
--- Compatible dengan Delta Executor
--- Created by Assistant
-
 -- Services
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
+local GuiService = game:GetService("GuiService")
+
+-- Mobile Detection
+local IsMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
 
 -- Variables
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local Humanoid = Character:WaitForChild("Humanoid")
-local DefaultWalkspeed = 16
+local DefaultWalkspeed = 1
 local CurrentWalkspeed = DefaultWalkspeed
 local UIVisible = true
 
@@ -23,11 +23,12 @@ ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.Parent = game:GetService("CoreGui") or LocalPlayer:WaitForChild("PlayerGui")
 
--- Main Frame
+-- Main Frame - Responsive untuk mobile
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 300, 0, 200)
-MainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+-- Ukuran responsif: lebih besar di mobile
+MainFrame.Size = IsMobile and UDim2.new(0, 350, 0, 220) or UDim2.new(0, 300, 0, 200)
+MainFrame.Position = UDim2.new(0.5, IsMobile and -175 or -150, 0.5, IsMobile and -110 or -100)
 MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
@@ -162,6 +163,43 @@ local SliderButtonCorner = Instance.new("UICorner")
 SliderButtonCorner.CornerRadius = UDim.new(1, 0)
 SliderButtonCorner.Parent = SliderButton
 
+-- Speed Control Buttons
+-- Decrease Speed Button (-)
+local DecreaseButton = Instance.new("TextButton")
+DecreaseButton.Name = "DecreaseButton"
+-- Ukuran lebih besar untuk mobile
+DecreaseButton.Size = IsMobile and UDim2.new(0, 40, 0, 40) or UDim2.new(0, 30, 0, 30)
+DecreaseButton.Position = UDim2.new(0, 0, 0, 70)
+DecreaseButton.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+DecreaseButton.Text = "−"
+DecreaseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+DecreaseButton.TextSize = IsMobile and 24 or 20
+DecreaseButton.Font = Enum.Font.SourceSansBold
+DecreaseButton.BorderSizePixel = 0
+DecreaseButton.Parent = ContentFrame
+
+local DecreaseCorner = Instance.new("UICorner")
+DecreaseCorner.CornerRadius = UDim.new(0, 8)
+DecreaseCorner.Parent = DecreaseButton
+
+-- Increase Speed Button (+)
+local IncreaseButton = Instance.new("TextButton")
+IncreaseButton.Name = "IncreaseButton"
+-- Ukuran lebih besar untuk mobile
+IncreaseButton.Size = IsMobile and UDim2.new(0, 40, 0, 40) or UDim2.new(0, 30, 0, 30)
+IncreaseButton.Position = IsMobile and UDim2.new(1, -40, 0, 70) or UDim2.new(1, -30, 0, 70)
+IncreaseButton.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
+IncreaseButton.Text = "+"
+IncreaseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+IncreaseButton.TextSize = IsMobile and 24 or 20
+IncreaseButton.Font = Enum.Font.SourceSansBold
+IncreaseButton.BorderSizePixel = 0
+IncreaseButton.Parent = ContentFrame
+
+local IncreaseCorner = Instance.new("UICorner")
+IncreaseCorner.CornerRadius = UDim.new(0, 8)
+IncreaseCorner.Parent = IncreaseButton
+
 -- Reset Button
 local ResetButton = Instance.new("TextButton")
 ResetButton.Name = "ResetButton"
@@ -268,6 +306,18 @@ local function ResetWalkspeed()
     ApplyWalkspeed()
 end
 
+local function IncreaseSpeed()
+    local newSpeed = CurrentWalkspeed + 10
+    UpdateWalkspeed(newSpeed)
+    ApplyWalkspeed()
+end
+
+local function DecreaseSpeed()
+    local newSpeed = CurrentWalkspeed - 10
+    UpdateWalkspeed(newSpeed)
+    ApplyWalkspeed()
+end
+
 local function HideUI()
     UIVisible = false
     MainFrame.Visible = false
@@ -305,27 +355,34 @@ end
 -- Slider functionality
 local dragging = false
 
+-- Mouse/Touch input untuk slider
 SliderBG.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
         dragging = true
+        -- Update posisi langsung saat klik/touch
+        local mouse = input.Position
+        local relativeX = mouse.X - SliderBG.AbsolutePosition.X
+        local percentage = math.clamp(relativeX / SliderBG.AbsoluteSize.X, 0, 1)
+        local speed = percentage * 200
+        UpdateWalkspeed(speed)
     end
 end)
 
 SliderButton.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
         dragging = true
     end
 end)
 
 UserInputService.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
         dragging = false
     end
 end)
 
 UserInputService.InputChanged:Connect(function(input)
-    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-        local mouse = UserInputService:GetMouseLocation()
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local mouse = input.Position
         local relativeX = mouse.X - SliderBG.AbsolutePosition.X
         local percentage = math.clamp(relativeX / SliderBG.AbsoluteSize.X, 0, 1)
         local speed = percentage * 200
@@ -339,13 +396,17 @@ ApplyButton.MouseButton1Click:Connect(ApplyWalkspeed)
 CloseButton.MouseButton1Click:Connect(ToggleUI)
 HideButton.MouseButton1Click:Connect(HideUI)
 ShowButton.MouseButton1Click:Connect(ShowUI)
+IncreaseButton.MouseButton1Click:Connect(IncreaseSpeed)
+DecreaseButton.MouseButton1Click:Connect(DecreaseSpeed)
 
--- Toggle UI dengan RightShift
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if not gameProcessed and input.KeyCode == Enum.KeyCode.RightShift then
-        ToggleUI()
-    end
-end)
+-- Toggle UI dengan RightShift (hanya untuk PC)
+if not IsMobile then
+    UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if not gameProcessed and input.KeyCode == Enum.KeyCode.RightShift then
+            ToggleUI()
+        end
+    end)
+end
 
 -- Character respawn handler
 LocalPlayer.CharacterAdded:Connect(function(newCharacter)
@@ -370,13 +431,19 @@ ButtonHover(ApplyButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230
 ButtonHover(CloseButton, Color3.fromRGB(255, 50, 50), Color3.fromRGB(255, 80, 80))
 ButtonHover(HideButton, Color3.fromRGB(100, 100, 100), Color3.fromRGB(120, 120, 120))
 ButtonHover(ShowButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230))
+ButtonHover(IncreaseButton, Color3.fromRGB(100, 255, 100), Color3.fromRGB(120, 255, 120))
+ButtonHover(DecreaseButton, Color3.fromRGB(255, 100, 100), Color3.fromRGB(255, 120, 120))
 
 -- Initial setup
 UpdateWalkspeed(DefaultWalkspeed)
 
 -- Notification
+local notificationText = IsMobile and 
+    "Successfully loaded! Mobile-friendly UI. Use Hide/Show buttons to toggle." or
+    "Successfully loaded! Works on Mobile & PC. Use Hide/Show buttons or RightShift to toggle UI"
+
 game.StarterGui:SetCore("SendNotification", {
     Title = "Walkspeed Script",
-    Text = "Successfully loaded! Use Hide/Show buttons or RightShift to toggle UI",
+    Text = notificationText,
     Duration = 5
 })
