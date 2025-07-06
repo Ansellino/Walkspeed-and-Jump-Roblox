@@ -23,12 +23,12 @@ ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.Parent = game:GetService("CoreGui") or LocalPlayer:WaitForChild("PlayerGui")
 
--- Main Frame - Responsive untuk mobile
+-- Main Frame - Responsive untuk mobile dengan tinggi yang disesuaikan
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
--- Ukuran responsif: lebih besar di mobile
-MainFrame.Size = IsMobile and UDim2.new(0, 350, 0, 220) or UDim2.new(0, 300, 0, 200)
-MainFrame.Position = UDim2.new(0.5, IsMobile and -175 or -150, 0.5, IsMobile and -110 or -100)
+-- Ukuran responsif: lebih besar di mobile dengan tinggi yang disesuaikan
+MainFrame.Size = IsMobile and UDim2.new(0, 370, 0, 240) or UDim2.new(0, 320, 0, 220)
+MainFrame.Position = UDim2.new(0.5, IsMobile and -185 or -160, 0.5, IsMobile and -120 or -110)
 MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
@@ -39,6 +39,15 @@ MainFrame.Parent = ScreenGui
 local UICorner = Instance.new("UICorner")
 UICorner.CornerRadius = UDim.new(0, 12)
 UICorner.Parent = MainFrame
+
+-- Gradient Background untuk main frame
+local MainGradient = Instance.new("UIGradient")
+MainGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 35, 35)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 25, 25))
+}
+MainGradient.Rotation = 45
+MainGradient.Parent = MainFrame
 
 -- Shadow Effect
 local Shadow = Instance.new("ImageLabel")
@@ -66,6 +75,15 @@ TitleBar.Parent = MainFrame
 local TitleCorner = Instance.new("UICorner")
 TitleCorner.CornerRadius = UDim.new(0, 12)
 TitleCorner.Parent = TitleBar
+
+-- Gradient untuk title bar
+local TitleGradient = Instance.new("UIGradient")
+TitleGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(50, 50, 50)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(35, 35, 35))
+}
+TitleGradient.Rotation = 90
+TitleGradient.Parent = TitleBar
 
 -- Fix untuk rounded corner di bottom
 local TitleFix = Instance.new("Frame")
@@ -163,38 +181,61 @@ local SliderButtonCorner = Instance.new("UICorner")
 SliderButtonCorner.CornerRadius = UDim.new(1, 0)
 SliderButtonCorner.Parent = SliderButton
 
--- Speed Control Buttons
+-- Speed Control Buttons dengan layout yang lebih rapi
+-- Container untuk speed control buttons
+local SpeedControlFrame = Instance.new("Frame")
+SpeedControlFrame.Name = "SpeedControlFrame"
+SpeedControlFrame.Size = UDim2.new(1, 0, 0, 40)
+SpeedControlFrame.Position = UDim2.new(0, 0, 0, 70)
+SpeedControlFrame.BackgroundTransparency = 1
+SpeedControlFrame.Parent = ContentFrame
+
 -- Decrease Speed Button (-)
 local DecreaseButton = Instance.new("TextButton")
 DecreaseButton.Name = "DecreaseButton"
--- Ukuran lebih besar untuk mobile
-DecreaseButton.Size = IsMobile and UDim2.new(0, 40, 0, 40) or UDim2.new(0, 30, 0, 30)
-DecreaseButton.Position = UDim2.new(0, 0, 0, 70)
+DecreaseButton.Size = IsMobile and UDim2.new(0, 45, 0, 40) or UDim2.new(0, 35, 0, 35)
+DecreaseButton.Position = UDim2.new(0, 0, 0.5, IsMobile and -20 or -17.5)
 DecreaseButton.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
 DecreaseButton.Text = "−"
 DecreaseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 DecreaseButton.TextSize = IsMobile and 24 or 20
 DecreaseButton.Font = Enum.Font.SourceSansBold
 DecreaseButton.BorderSizePixel = 0
-DecreaseButton.Parent = ContentFrame
+DecreaseButton.Parent = SpeedControlFrame
 
 local DecreaseCorner = Instance.new("UICorner")
 DecreaseCorner.CornerRadius = UDim.new(0, 8)
 DecreaseCorner.Parent = DecreaseButton
 
+-- Speed Display dalam speed control
+local SpeedDisplay = Instance.new("TextLabel")
+SpeedDisplay.Name = "SpeedDisplay"
+SpeedDisplay.Size = IsMobile and UDim2.new(1, -110, 0, 30) or UDim2.new(1, -90, 0, 25)
+SpeedDisplay.Position = IsMobile and UDim2.new(0, 55, 0.5, -15) or UDim2.new(0, 45, 0.5, -12.5)
+SpeedDisplay.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+SpeedDisplay.Text = "Speed: " .. math.floor(CurrentWalkspeed)
+SpeedDisplay.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedDisplay.TextScaled = true
+SpeedDisplay.Font = Enum.Font.SourceSansBold
+SpeedDisplay.BorderSizePixel = 0
+SpeedDisplay.Parent = SpeedControlFrame
+
+local SpeedDisplayCorner = Instance.new("UICorner")
+SpeedDisplayCorner.CornerRadius = UDim.new(0, 6)
+SpeedDisplayCorner.Parent = SpeedDisplay
+
 -- Increase Speed Button (+)
 local IncreaseButton = Instance.new("TextButton")
 IncreaseButton.Name = "IncreaseButton"
--- Ukuran lebih besar untuk mobile
-IncreaseButton.Size = IsMobile and UDim2.new(0, 40, 0, 40) or UDim2.new(0, 30, 0, 30)
-IncreaseButton.Position = IsMobile and UDim2.new(1, -40, 0, 70) or UDim2.new(1, -30, 0, 70)
+IncreaseButton.Size = IsMobile and UDim2.new(0, 45, 0, 40) or UDim2.new(0, 35, 0, 35)
+IncreaseButton.Position = IsMobile and UDim2.new(1, -45, 0.5, -20) or UDim2.new(1, -35, 0.5, -17.5)
 IncreaseButton.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
 IncreaseButton.Text = "+"
 IncreaseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 IncreaseButton.TextSize = IsMobile and 24 or 20
 IncreaseButton.Font = Enum.Font.SourceSansBold
 IncreaseButton.BorderSizePixel = 0
-IncreaseButton.Parent = ContentFrame
+IncreaseButton.Parent = SpeedControlFrame
 
 local IncreaseCorner = Instance.new("UICorner")
 IncreaseCorner.CornerRadius = UDim.new(0, 8)
@@ -203,13 +244,13 @@ IncreaseCorner.Parent = IncreaseButton
 -- Reset Button
 local ResetButton = Instance.new("TextButton")
 ResetButton.Name = "ResetButton"
-ResetButton.Size = UDim2.new(0.45, 0, 0, 35)
-ResetButton.Position = UDim2.new(0, 0, 0, 80)
+ResetButton.Size = UDim2.new(0.45, -5, 0, 35)
+ResetButton.Position = UDim2.new(0, 0, 0, 120)
 ResetButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 ResetButton.Text = "Reset"
 ResetButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 ResetButton.TextScaled = true
-ResetButton.Font = Enum.Font.SourceSans
+ResetButton.Font = Enum.Font.SourceSansBold
 ResetButton.BorderSizePixel = 0
 ResetButton.Parent = ContentFrame
 
@@ -220,13 +261,13 @@ ResetCorner.Parent = ResetButton
 -- Apply Button
 local ApplyButton = Instance.new("TextButton")
 ApplyButton.Name = "ApplyButton"
-ApplyButton.Size = UDim2.new(0.45, 0, 0, 35)
-ApplyButton.Position = UDim2.new(0.55, 0, 0, 80)
+ApplyButton.Size = UDim2.new(0.45, -5, 0, 35)
+ApplyButton.Position = UDim2.new(0.55, 5, 0, 120)
 ApplyButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
 ApplyButton.Text = "Apply"
 ApplyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 ApplyButton.TextScaled = true
-ApplyButton.Font = Enum.Font.SourceSans
+ApplyButton.Font = Enum.Font.SourceSansBold
 ApplyButton.BorderSizePixel = 0
 ApplyButton.Parent = ContentFrame
 
@@ -234,22 +275,31 @@ local ApplyCorner = Instance.new("UICorner")
 ApplyCorner.CornerRadius = UDim.new(0, 8)
 ApplyCorner.Parent = ApplyButton
 
--- Hide Button (di dalam UI)
+-- Hide Button (di dalam UI) dengan posisi yang lebih rapi
 local HideButton = Instance.new("TextButton")
 HideButton.Name = "HideButton"
-HideButton.Size = UDim2.new(0, 80, 0, 30)
-HideButton.Position = UDim2.new(0.5, -40, 1, -35)
-HideButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+HideButton.Size = UDim2.new(0, 90, 0, 30)
+HideButton.Position = UDim2.new(0.5, -45, 1, -40)
+HideButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 HideButton.Text = "Hide UI"
 HideButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 HideButton.TextScaled = true
-HideButton.Font = Enum.Font.SourceSans
+HideButton.Font = Enum.Font.SourceSansBold
 HideButton.BorderSizePixel = 0
 HideButton.Parent = MainFrame
 
 local HideCorner = Instance.new("UICorner")
 HideCorner.CornerRadius = UDim.new(0, 8)
 HideCorner.Parent = HideButton
+
+-- Gradient untuk hide button
+local HideGradient = Instance.new("UIGradient")
+HideGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(80, 80, 80)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(60, 60, 60))
+}
+HideGradient.Rotation = 90
+HideGradient.Parent = HideButton
 
 -- Floating Show Button (selalu visible)
 local ShowButton = Instance.new("TextButton")
@@ -289,6 +339,7 @@ ShowShadowCorner.Parent = ShowShadow
 local function UpdateWalkspeed(speed)
     CurrentWalkspeed = math.clamp(speed, 0, 200)
     SpeedLabel.Text = "Current Speed: " .. math.floor(CurrentWalkspeed)
+    SpeedDisplay.Text = "Speed: " .. math.floor(CurrentWalkspeed)
     
     local percentage = (CurrentWalkspeed - 0) / 200
     SliderFill.Size = UDim2.new(percentage, 0, 1, 0)
@@ -307,13 +358,13 @@ local function ResetWalkspeed()
 end
 
 local function IncreaseSpeed()
-    local newSpeed = CurrentWalkspeed + 10
+    local newSpeed = CurrentWalkspeed + 2
     UpdateWalkspeed(newSpeed)
     ApplyWalkspeed()
 end
 
 local function DecreaseSpeed()
-    local newSpeed = CurrentWalkspeed - 10
+    local newSpeed = CurrentWalkspeed - 2
     UpdateWalkspeed(newSpeed)
     ApplyWalkspeed()
 end
@@ -433,6 +484,19 @@ ButtonHover(HideButton, Color3.fromRGB(100, 100, 100), Color3.fromRGB(120, 120, 
 ButtonHover(ShowButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230))
 ButtonHover(IncreaseButton, Color3.fromRGB(100, 255, 100), Color3.fromRGB(120, 255, 120))
 ButtonHover(DecreaseButton, Color3.fromRGB(255, 100, 100), Color3.fromRGB(255, 120, 120))
+
+-- Hover effect untuk SpeedDisplay
+SpeedDisplay.MouseEnter:Connect(function()
+    TweenService:Create(SpeedDisplay, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(55, 55, 55)
+    }):Play()
+end)
+
+SpeedDisplay.MouseLeave:Connect(function()
+    TweenService:Create(SpeedDisplay, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    }):Play()
+end)
 
 -- Initial setup
 UpdateWalkspeed(DefaultWalkspeed)
