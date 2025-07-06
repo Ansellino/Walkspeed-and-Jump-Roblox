@@ -196,17 +196,56 @@ local ApplyCorner = Instance.new("UICorner")
 ApplyCorner.CornerRadius = UDim.new(0, 8)
 ApplyCorner.Parent = ApplyButton
 
--- Toggle UI Label
-local ToggleLabel = Instance.new("TextLabel")
-ToggleLabel.Name = "ToggleLabel"
-ToggleLabel.Size = UDim2.new(1, 0, 0, 20)
-ToggleLabel.Position = UDim2.new(0, 0, 1, -20)
-ToggleLabel.BackgroundTransparency = 1
-ToggleLabel.Text = "Press [RightShift] to toggle UI"
-ToggleLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-ToggleLabel.TextScaled = true
-ToggleLabel.Font = Enum.Font.SourceSans
-ToggleLabel.Parent = MainFrame
+-- Hide Button (di dalam UI)
+local HideButton = Instance.new("TextButton")
+HideButton.Name = "HideButton"
+HideButton.Size = UDim2.new(0, 80, 0, 30)
+HideButton.Position = UDim2.new(0.5, -40, 1, -35)
+HideButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+HideButton.Text = "Hide UI"
+HideButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+HideButton.TextScaled = true
+HideButton.Font = Enum.Font.SourceSans
+HideButton.BorderSizePixel = 0
+HideButton.Parent = MainFrame
+
+local HideCorner = Instance.new("UICorner")
+HideCorner.CornerRadius = UDim.new(0, 8)
+HideCorner.Parent = HideButton
+
+-- Floating Show Button (selalu visible)
+local ShowButton = Instance.new("TextButton")
+ShowButton.Name = "ShowButton"
+ShowButton.Size = UDim2.new(0, 100, 0, 40)
+ShowButton.Position = UDim2.new(0, 10, 0.5, -20)
+ShowButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+ShowButton.Text = "Show UI"
+ShowButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ShowButton.TextScaled = true
+ShowButton.Font = Enum.Font.SourceSansBold
+ShowButton.BorderSizePixel = 0
+ShowButton.Visible = false
+ShowButton.Active = true
+ShowButton.Draggable = true
+ShowButton.Parent = ScreenGui
+
+local ShowCorner = Instance.new("UICorner")
+ShowCorner.CornerRadius = UDim.new(0, 10)
+ShowCorner.Parent = ShowButton
+
+-- Shadow untuk Show Button
+local ShowShadow = Instance.new("Frame")
+ShowShadow.Name = "ShowShadow"
+ShowShadow.Size = UDim2.new(1, 4, 1, 4)
+ShowShadow.Position = UDim2.new(0, 2, 0, 2)
+ShowShadow.BackgroundColor3 = Color3.new(0, 0, 0)
+ShowShadow.BackgroundTransparency = 0.5
+ShowShadow.ZIndex = -1
+ShowShadow.Parent = ShowButton
+
+local ShowShadowCorner = Instance.new("UICorner")
+ShowShadowCorner.CornerRadius = UDim.new(0, 10)
+ShowShadowCorner.Parent = ShowShadow
 
 -- Functions
 local function UpdateWalkspeed(speed)
@@ -229,9 +268,38 @@ local function ResetWalkspeed()
     ApplyWalkspeed()
 end
 
+local function HideUI()
+    UIVisible = false
+    MainFrame.Visible = false
+    ShowButton.Visible = true
+    
+    -- Animasi fade in untuk show button
+    ShowButton.BackgroundTransparency = 1
+    ShowButton.TextTransparency = 1
+    TweenService:Create(ShowButton, TweenInfo.new(0.3), {
+        BackgroundTransparency = 0,
+        TextTransparency = 0
+    }):Play()
+end
+
+local function ShowUI()
+    UIVisible = true
+    MainFrame.Visible = true
+    ShowButton.Visible = false
+    
+    -- Animasi fade in untuk main frame
+    MainFrame.BackgroundTransparency = 1
+    TweenService:Create(MainFrame, TweenInfo.new(0.3), {
+        BackgroundTransparency = 0
+    }):Play()
+end
+
 local function ToggleUI()
-    UIVisible = not UIVisible
-    MainFrame.Visible = UIVisible
+    if UIVisible then
+        HideUI()
+    else
+        ShowUI()
+    end
 end
 
 -- Slider functionality
@@ -269,6 +337,8 @@ end)
 ResetButton.MouseButton1Click:Connect(ResetWalkspeed)
 ApplyButton.MouseButton1Click:Connect(ApplyWalkspeed)
 CloseButton.MouseButton1Click:Connect(ToggleUI)
+HideButton.MouseButton1Click:Connect(HideUI)
+ShowButton.MouseButton1Click:Connect(ShowUI)
 
 -- Toggle UI dengan RightShift
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
@@ -298,6 +368,8 @@ end
 ButtonHover(ResetButton, Color3.fromRGB(60, 60, 60), Color3.fromRGB(80, 80, 80))
 ButtonHover(ApplyButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230))
 ButtonHover(CloseButton, Color3.fromRGB(255, 50, 50), Color3.fromRGB(255, 80, 80))
+ButtonHover(HideButton, Color3.fromRGB(100, 100, 100), Color3.fromRGB(120, 120, 120))
+ButtonHover(ShowButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230))
 
 -- Initial setup
 UpdateWalkspeed(DefaultWalkspeed)
@@ -305,6 +377,6 @@ UpdateWalkspeed(DefaultWalkspeed)
 -- Notification
 game.StarterGui:SetCore("SendNotification", {
     Title = "Walkspeed Script",
-    Text = "Successfully loaded! Press RightShift to toggle UI",
+    Text = "Successfully loaded! Use Hide/Show buttons or RightShift to toggle UI",
     Duration = 5
 })
