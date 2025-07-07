@@ -570,13 +570,13 @@ local function DecreaseSpeed()
 end
 
 local function IncreaseJump()
-    local newJumpPower = CurrentJumpPower + 5
+    local newJumpPower = CurrentJumpPower + 2
     UpdateJumpPower(newJumpPower)
     ApplyJumpPower()
 end
 
 local function DecreaseJump()
-    local newJumpPower = CurrentJumpPower - 5
+    local newJumpPower = CurrentJumpPower - 2
     UpdateJumpPower(newJumpPower)
     ApplyJumpPower()
 end
