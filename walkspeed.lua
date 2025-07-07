@@ -213,7 +213,7 @@ JumpSliderBGCorner.Parent = JumpSliderBG
 -- Jump Slider Fill
 local JumpSliderFill = Instance.new("Frame")
 JumpSliderFill.Name = "JumpSliderFill"
-JumpSliderFill.Size = UDim2.new((CurrentJumpPower - 0) / 200, 0, 1, 0)
+JumpSliderFill.Size = UDim2.new((CurrentJumpPower - 0) / 500, 0, 1, 0)
 JumpSliderFill.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
 JumpSliderFill.BorderSizePixel = 0
 JumpSliderFill.Parent = JumpSliderBG
@@ -226,7 +226,7 @@ JumpSliderFillCorner.Parent = JumpSliderFill
 local JumpSliderButton = Instance.new("Frame")
 JumpSliderButton.Name = "JumpSliderButton"
 JumpSliderButton.Size = UDim2.new(0, 20, 0, 20)
-JumpSliderButton.Position = UDim2.new((CurrentJumpPower - 0) / 200, -10, 0.5, -10)
+JumpSliderButton.Position = UDim2.new((CurrentJumpPower - 0) / 500, -10, 0.5, -10)
 JumpSliderButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 JumpSliderButton.BorderSizePixel = 0
 JumpSliderButton.Parent = JumpSliderBG
@@ -519,11 +519,11 @@ local function UpdateWalkspeed(speed)
 end
 
 local function UpdateJumpPower(jumpPower)
-    CurrentJumpPower = math.clamp(jumpPower, 0, 200)
+    CurrentJumpPower = math.clamp(jumpPower, 0, 500)
     JumpLabel.Text = "Jump Power: " .. math.floor(CurrentJumpPower)
     JumpDisplay.Text = "Jump: " .. math.floor(CurrentJumpPower)
     
-    local percentage = (CurrentJumpPower - 0) / 200
+    local percentage = (CurrentJumpPower - 0) / 500
     JumpSliderFill.Size = UDim2.new(percentage, 0, 1, 0)
     JumpSliderButton.Position = UDim2.new(percentage, -10, 0.5, -10)
 end
@@ -570,13 +570,13 @@ local function DecreaseSpeed()
 end
 
 local function IncreaseJump()
-    local newJumpPower = CurrentJumpPower + 2
+    local newJumpPower = CurrentJumpPower + 10
     UpdateJumpPower(newJumpPower)
     ApplyJumpPower()
 end
 
 local function DecreaseJump()
-    local newJumpPower = CurrentJumpPower - 2
+    local newJumpPower = CurrentJumpPower - 10
     UpdateJumpPower(newJumpPower)
     ApplyJumpPower()
 end
@@ -688,7 +688,7 @@ JumpSliderBG.InputBegan:Connect(function(input)
         local mouse = input.Position
         local relativeX = mouse.X - JumpSliderBG.AbsolutePosition.X
         local percentage = math.clamp(relativeX / JumpSliderBG.AbsoluteSize.X, 0, 1)
-        local jumpPower = percentage * 200
+        local jumpPower = percentage * 500
         UpdateJumpPower(jumpPower)
     end
 end)
@@ -720,7 +720,7 @@ UserInputService.InputChanged:Connect(function(input)
             local mouse = input.Position
             local relativeX = mouse.X - JumpSliderBG.AbsolutePosition.X
             local percentage = math.clamp(relativeX / JumpSliderBG.AbsoluteSize.X, 0, 1)
-            local jumpPower = percentage * 200
+            local jumpPower = percentage * 500
             UpdateJumpPower(jumpPower)
         end
     end
