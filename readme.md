@@ -1,9 +1,8 @@
 # Roblox Project
 
 ## How to use
-'''bash
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Ansellino/roblox/main/walkspeed.lua"))()
-'''
 
 ## Purpose
 
