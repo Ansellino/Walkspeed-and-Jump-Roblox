@@ -1,5 +1,9 @@
 # Roblox Project
 
+## How to use
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Ansellino/roblox/main/walkspeed.lua"))()
+
 ## Purpose
 
 For learning and personal use only.
