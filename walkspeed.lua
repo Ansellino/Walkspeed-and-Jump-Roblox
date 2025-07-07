@@ -14,9 +14,10 @@ local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local Humanoid = Character:WaitForChild("Humanoid")
 local DefaultWalkspeed = 1
 local CurrentWalkspeed = DefaultWalkspeed
-local DefaultJumpPower = 50
+local DefaultJumpPower = 1
 local CurrentJumpPower = DefaultJumpPower
 local UIVisible = true
+local JumpButtonVisible = true
 
 -- Membuat ScreenGui
 local ScreenGui = Instance.new("ScreenGui")
@@ -29,8 +30,8 @@ ScreenGui.Parent = game:GetService("CoreGui") or LocalPlayer:WaitForChild("Playe
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 -- Ukuran responsif: lebih besar di mobile dengan tinggi yang disesuaikan untuk jump controls
-MainFrame.Size = IsMobile and UDim2.new(0, 370, 0, 340) or UDim2.new(0, 320, 0, 320)
-MainFrame.Position = UDim2.new(0.5, IsMobile and -185 or -160, 0.5, IsMobile and -170 or -160)
+MainFrame.Size = IsMobile and UDim2.new(0, 370, 0, 380) or UDim2.new(0, 320, 0, 360)
+MainFrame.Position = UDim2.new(0.5, IsMobile and -185 or -160, 0.5, IsMobile and -190 or -180)
 MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
@@ -387,6 +388,23 @@ local ApplyCorner = Instance.new("UICorner")
 ApplyCorner.CornerRadius = UDim.new(0, 8)
 ApplyCorner.Parent = ApplyButton
 
+-- Toggle Jump Button
+local ToggleJumpButton = Instance.new("TextButton")
+ToggleJumpButton.Name = "ToggleJumpButton"
+ToggleJumpButton.Size = UDim2.new(1, 0, 0, 30)
+ToggleJumpButton.Position = UDim2.new(0, 0, 0, 275)
+ToggleJumpButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+ToggleJumpButton.Text = "Hide Jump Button"
+ToggleJumpButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleJumpButton.TextScaled = true
+ToggleJumpButton.Font = Enum.Font.SourceSansBold
+ToggleJumpButton.BorderSizePixel = 0
+ToggleJumpButton.Parent = ContentFrame
+
+local ToggleJumpCorner = Instance.new("UICorner")
+ToggleJumpCorner.CornerRadius = UDim.new(0, 8)
+ToggleJumpCorner.Parent = ToggleJumpButton
+
 -- Hide Button (di dalam UI) dengan posisi yang lebih rapi
 local HideButton = Instance.new("TextButton")
 HideButton.Name = "HideButton"
@@ -446,6 +464,48 @@ ShowShadow.Parent = ShowButton
 local ShowShadowCorner = Instance.new("UICorner")
 ShowShadowCorner.CornerRadius = UDim.new(0, 10)
 ShowShadowCorner.Parent = ShowShadow
+
+-- Floating Jump Button
+local JumpButton = Instance.new("TextButton")
+JumpButton.Name = "JumpButton"
+JumpButton.Size = IsMobile and UDim2.new(0, 80, 0, 80) or UDim2.new(0, 70, 0, 70)
+JumpButton.Position = IsMobile and UDim2.new(1, -90, 1, -90) or UDim2.new(1, -80, 1, -80)
+JumpButton.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+JumpButton.Text = "JUMP"
+JumpButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+JumpButton.TextScaled = true
+JumpButton.Font = Enum.Font.SourceSansBold
+JumpButton.BorderSizePixel = 0
+JumpButton.Active = true
+JumpButton.Draggable = true
+JumpButton.Parent = ScreenGui
+
+local JumpButtonCorner = Instance.new("UICorner")
+JumpButtonCorner.CornerRadius = UDim.new(0.5, 0)
+JumpButtonCorner.Parent = JumpButton
+
+-- Gradient untuk Jump Button
+local JumpButtonGradient = Instance.new("UIGradient")
+JumpButtonGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 190, 30)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 150, 0))
+}
+JumpButtonGradient.Rotation = 45
+JumpButtonGradient.Parent = JumpButton
+
+-- Shadow untuk Jump Button
+local JumpButtonShadow = Instance.new("Frame")
+JumpButtonShadow.Name = "JumpButtonShadow"
+JumpButtonShadow.Size = UDim2.new(1, 6, 1, 6)
+JumpButtonShadow.Position = UDim2.new(0, 3, 0, 3)
+JumpButtonShadow.BackgroundColor3 = Color3.new(0, 0, 0)
+JumpButtonShadow.BackgroundTransparency = 0.3
+JumpButtonShadow.ZIndex = -1
+JumpButtonShadow.Parent = JumpButton
+
+local JumpButtonShadowCorner = Instance.new("UICorner")
+JumpButtonShadowCorner.CornerRadius = UDim.new(0.5, 0)
+JumpButtonShadowCorner.Parent = JumpButtonShadow
 
 -- Functions
 local function UpdateWalkspeed(speed)
@@ -519,6 +579,48 @@ local function DecreaseJump()
     local newJumpPower = CurrentJumpPower - 5
     UpdateJumpPower(newJumpPower)
     ApplyJumpPower()
+end
+
+local function ToggleJumpButtonVisibility()
+    JumpButtonVisible = not JumpButtonVisible
+    JumpButton.Visible = JumpButtonVisible
+    
+    if JumpButtonVisible then
+        ToggleJumpButton.Text = "Hide Jump Button"
+        ToggleJumpButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+        
+        -- Animasi fade in untuk jump button
+        JumpButton.BackgroundTransparency = 1
+        JumpButton.TextTransparency = 1
+        TweenService:Create(JumpButton, TweenInfo.new(0.3), {
+            BackgroundTransparency = 0,
+            TextTransparency = 0
+        }):Play()
+    else
+        ToggleJumpButton.Text = "Show Jump Button"
+        ToggleJumpButton.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+    end
+end
+
+local function DoJump()
+    if Humanoid and Humanoid.Parent and Humanoid.Parent:FindFirstChild("HumanoidRootPart") then
+        -- Apply current jump power before jumping
+        ApplyJumpPower()
+        
+        -- Make the character jump
+        Humanoid.Jump = true
+        
+        -- Visual feedback - button press effect
+        local originalSize = JumpButton.Size
+        TweenService:Create(JumpButton, TweenInfo.new(0.1), {
+            Size = originalSize * 0.9
+        }):Play()
+        
+        wait(0.1)
+        TweenService:Create(JumpButton, TweenInfo.new(0.1), {
+            Size = originalSize
+        }):Play()
+    end
 end
 
 local function HideUI()
@@ -634,6 +736,8 @@ IncreaseButton.MouseButton1Click:Connect(IncreaseSpeed)
 DecreaseButton.MouseButton1Click:Connect(DecreaseSpeed)
 IncreaseJumpButton.MouseButton1Click:Connect(IncreaseJump)
 DecreaseJumpButton.MouseButton1Click:Connect(DecreaseJump)
+ToggleJumpButton.MouseButton1Click:Connect(ToggleJumpButtonVisibility)
+JumpButton.MouseButton1Click:Connect(DoJump)
 
 -- Toggle UI dengan RightShift (hanya untuk PC)
 if not IsMobile then
@@ -672,6 +776,30 @@ ButtonHover(DecreaseButton, Color3.fromRGB(255, 100, 100), Color3.fromRGB(255, 1
 ButtonHover(IncreaseJumpButton, Color3.fromRGB(255, 170, 0), Color3.fromRGB(255, 190, 30))
 ButtonHover(DecreaseJumpButton, Color3.fromRGB(255, 140, 0), Color3.fromRGB(255, 160, 30))
 
+-- Special hover effect untuk ToggleJumpButton
+ToggleJumpButton.MouseEnter:Connect(function()
+    local targetColor = JumpButtonVisible and Color3.fromRGB(120, 120, 120) or Color3.fromRGB(255, 190, 30)
+    TweenService:Create(ToggleJumpButton, TweenInfo.new(0.2), {BackgroundColor3 = targetColor}):Play()
+end)
+
+ToggleJumpButton.MouseLeave:Connect(function()
+    local targetColor = JumpButtonVisible and Color3.fromRGB(100, 100, 100) or Color3.fromRGB(255, 170, 0)
+    TweenService:Create(ToggleJumpButton, TweenInfo.new(0.2), {BackgroundColor3 = targetColor}):Play()
+end)
+
+-- Hover effect untuk JumpButton
+JumpButton.MouseEnter:Connect(function()
+    TweenService:Create(JumpButton, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(255, 190, 30)
+    }):Play()
+end)
+
+JumpButton.MouseLeave:Connect(function()
+    TweenService:Create(JumpButton, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+    }):Play()
+end)
+
 -- Hover effect untuk SpeedDisplay
 SpeedDisplay.MouseEnter:Connect(function()
     TweenService:Create(SpeedDisplay, TweenInfo.new(0.2), {
@@ -704,8 +832,8 @@ UpdateJumpPower(DefaultJumpPower)
 
 -- Notification
 local notificationText = IsMobile and 
-    "Successfully loaded! Mobile-friendly UI with Speed & Jump controls. Use Hide/Show buttons to toggle." or
-    "Successfully loaded! Speed & Jump controls. Use Hide/Show buttons or RightShift to toggle UI"
+    "Successfully loaded! Mobile-friendly UI with Speed & Jump controls + Jump Button. Use Hide/Show buttons to toggle." or
+    "Successfully loaded! Speed & Jump controls + Jump Button. Use Hide/Show buttons or RightShift to toggle UI"
 
 game.StarterGui:SetCore("SendNotification", {
     Title = "Speed & Jump Script",
