@@ -116,7 +116,7 @@ CloseCorner.Parent = CloseButton
 -- Content Frame
 local ContentFrame = Instance.new("Frame")
 ContentFrame.Name = "ContentFrame"
-ContentFrame.Size = UDim2.new(1, -20, 1, -85)
+ContentFrame.Size = UDim2.new(1, -20, 1, -60)
 ContentFrame.Position = UDim2.new(0, 10, 0, 50)
 ContentFrame.BackgroundTransparency = 1
 ContentFrame.Parent = MainFrame
@@ -396,8 +396,8 @@ ToggleJumpCorner.Parent = ToggleJumpButton
 local HideButton = Instance.new("TextButton")
 HideButton.Name = "HideButton"
 HideButton.Size = UDim2.new(0, 90, 0, 30)
-HideButton.Position = UDim2.new(0.5, -45, 1, -35)
-HideButton.BackgroundColor3 = Color3.fromRGB(180, 100, 100)
+HideButton.Position = UDim2.new(0.5, -45, 1, -40)
+HideButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 HideButton.Text = "Hide UI"
 HideButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 HideButton.TextScaled = true
@@ -412,8 +412,8 @@ HideCorner.Parent = HideButton
 -- Gradient untuk hide button
 local HideGradient = Instance.new("UIGradient")
 HideGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(200, 120, 120)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(160, 80, 80))
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(80, 80, 80)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(60, 60, 60))
 }
 HideGradient.Rotation = 90
 HideGradient.Parent = HideButton
@@ -730,7 +730,7 @@ end
 ButtonHover(ResetButton, Color3.fromRGB(60, 60, 60), Color3.fromRGB(80, 80, 80))
 ButtonHover(ApplyButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230))
 ButtonHover(CloseButton, Color3.fromRGB(255, 50, 50), Color3.fromRGB(255, 80, 80))
-ButtonHover(HideButton, Color3.fromRGB(180, 100, 100), Color3.fromRGB(200, 120, 120))
+ButtonHover(HideButton, Color3.fromRGB(100, 100, 100), Color3.fromRGB(120, 120, 120))
 ButtonHover(ShowButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230))
 ButtonHover(IncreaseButton, Color3.fromRGB(100, 255, 100), Color3.fromRGB(120, 255, 120))
 ButtonHover(DecreaseButton, Color3.fromRGB(255, 100, 100), Color3.fromRGB(255, 120, 120))
