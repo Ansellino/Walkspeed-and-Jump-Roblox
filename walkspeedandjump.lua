@@ -30,8 +30,8 @@ ScreenGui.Parent = game:GetService("CoreGui") or LocalPlayer:WaitForChild("Playe
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 -- Ukuran responsif: lebih besar di mobile dengan tinggi yang disesuaikan untuk jump controls
-MainFrame.Size = IsMobile and UDim2.new(0, 350, 0, 400) or UDim2.new(0, 320, 0, 380)
-MainFrame.Position = UDim2.new(0.5, IsMobile and -175 or -160, 0.5, IsMobile and -200 or -190)
+MainFrame.Size = IsMobile and UDim2.new(0, 380, 0, 450) or UDim2.new(0, 360, 0, 420)
+MainFrame.Position = UDim2.new(0.5, IsMobile and -190 or -180, 0.5, IsMobile and -225 or -210)
 MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
@@ -72,7 +72,7 @@ ShadowCorner.Parent = Shadow
 -- Title Bar
 local TitleBar = Instance.new("Frame")
 TitleBar.Name = "TitleBar"
-TitleBar.Size = UDim2.new(1, 0, 0, 40)
+TitleBar.Size = UDim2.new(1, 0, 0, 50)
 TitleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 TitleBar.BorderSizePixel = 0
 TitleBar.Parent = MainFrame
@@ -101,8 +101,8 @@ TitleFix.Parent = TitleBar
 -- Title Text
 local TitleText = Instance.new("TextLabel")
 TitleText.Name = "TitleText"
-TitleText.Size = UDim2.new(1, -40, 1, 0)
-TitleText.Position = UDim2.new(0, 10, 0, 0)
+TitleText.Size = UDim2.new(1, -80, 1, 0)
+TitleText.Position = UDim2.new(0, 15, 0, 0)
 TitleText.BackgroundTransparency = 1
 TitleText.Text = "Speed & Jump Controller"
 TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -114,8 +114,8 @@ TitleText.Parent = TitleBar
 -- Close Button
 local CloseButton = Instance.new("TextButton")
 CloseButton.Name = "CloseButton"
-CloseButton.Size = UDim2.new(0, 30, 0, 30)
-CloseButton.Position = UDim2.new(1, -35, 0.5, -15)
+CloseButton.Size = UDim2.new(0, 35, 0, 35)
+CloseButton.Position = UDim2.new(1, -45, 0.5, -17.5)
 CloseButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
 CloseButton.Text = "×"
 CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -125,14 +125,23 @@ CloseButton.BorderSizePixel = 0
 CloseButton.Parent = TitleBar
 
 local CloseCorner = Instance.new("UICorner")
-CloseCorner.CornerRadius = UDim.new(0, 6)
+CloseCorner.CornerRadius = UDim.new(0, 8)
 CloseCorner.Parent = CloseButton
+
+-- Gradient untuk Close Button
+local CloseGradient = Instance.new("UIGradient")
+CloseGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 70, 70)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(220, 40, 40))
+}
+CloseGradient.Rotation = 90
+CloseGradient.Parent = CloseButton
 
 -- Content Frame
 local ContentFrame = Instance.new("Frame")
 ContentFrame.Name = "ContentFrame"
-ContentFrame.Size = UDim2.new(1, -20, 1, -60)
-ContentFrame.Position = UDim2.new(0, 10, 0, 50)
+ContentFrame.Size = UDim2.new(1, -30, 1, -70)
+ContentFrame.Position = UDim2.new(0, 15, 0, 60)
 ContentFrame.BackgroundTransparency = 1
 ContentFrame.Parent = MainFrame
 
