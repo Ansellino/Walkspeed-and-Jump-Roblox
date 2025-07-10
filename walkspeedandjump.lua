@@ -52,20 +52,7 @@ MainGradient.Color = ColorSequence.new{
 MainGradient.Rotation = 45
 MainGradient.Parent = MainFrame
 
--- Shadow Effect
-local Shadow = Instance.new("ImageLabel")
-Shadow.Name = "Shadow"
-Shadow.Size = UDim2.new(1, 30, 1, 30)
-Shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
-Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
-Shadow.BackgroundTransparency = 1
-Shadow.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
-Shadow.ImageColor3 = Color3.new(0, 0, 0)
-Shadow.ImageTransparency = 0.5
-Shadow.ScaleType = Enum.ScaleType.Slice
-Shadow.SliceCenter = Rect.new(10, 10, 10, 10)
-Shadow.ZIndex = -1
-Shadow.Parent = MainFrame
+
 
 -- Title Bar
 local TitleBar = Instance.new("Frame")
@@ -451,20 +438,6 @@ local ShowCorner = Instance.new("UICorner")
 ShowCorner.CornerRadius = UDim.new(0, 10)
 ShowCorner.Parent = ShowButton
 
--- Shadow untuk Show Button
-local ShowShadow = Instance.new("Frame")
-ShowShadow.Name = "ShowShadow"
-ShowShadow.Size = UDim2.new(1, 4, 1, 4)
-ShowShadow.Position = UDim2.new(0, 2, 0, 2)
-ShowShadow.BackgroundColor3 = Color3.new(0, 0, 0)
-ShowShadow.BackgroundTransparency = 0.5
-ShowShadow.ZIndex = -1
-ShowShadow.Parent = ShowButton
-
-local ShowShadowCorner = Instance.new("UICorner")
-ShowShadowCorner.CornerRadius = UDim.new(0, 10)
-ShowShadowCorner.Parent = ShowShadow
-
 -- Floating Jump Button
 local JumpButton = Instance.new("TextButton")
 JumpButton.Name = "JumpButton"
@@ -493,19 +466,7 @@ JumpButtonGradient.Color = ColorSequence.new{
 JumpButtonGradient.Rotation = 45
 JumpButtonGradient.Parent = JumpButton
 
--- Shadow untuk Jump Button
-local JumpButtonShadow = Instance.new("Frame")
-JumpButtonShadow.Name = "JumpButtonShadow"
-JumpButtonShadow.Size = UDim2.new(1, 6, 1, 6)
-JumpButtonShadow.Position = UDim2.new(0, 3, 0, 3)
-JumpButtonShadow.BackgroundColor3 = Color3.new(0, 0, 0)
-JumpButtonShadow.BackgroundTransparency = 0.3
-JumpButtonShadow.ZIndex = -1
-JumpButtonShadow.Parent = JumpButton
 
-local JumpButtonShadowCorner = Instance.new("UICorner")
-JumpButtonShadowCorner.CornerRadius = UDim.new(0.5, 0)
-JumpButtonShadowCorner.Parent = JumpButtonShadow
 
 -- Functions
 local function UpdateWalkspeed(speed)
