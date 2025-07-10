@@ -1,6 +1,6 @@
 # Roblox Project
 
-## How to use
+## How to use this script
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Ansellino/roblox/main/walkspeed.lua"))()
 
@@ -20,4 +20,4 @@ This project is created for educational purposes and personal development.
 
 ## Notes
 
-This is a private learning project.
+This is a private learning project._
