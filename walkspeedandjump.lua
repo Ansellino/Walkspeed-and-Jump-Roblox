@@ -30,8 +30,8 @@ ScreenGui.Parent = game:GetService("CoreGui") or LocalPlayer:WaitForChild("Playe
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 -- Ukuran responsif: lebih besar di mobile dengan tinggi yang disesuaikan untuk jump controls
-MainFrame.Size = IsMobile and UDim2.new(0, 450, 0, 420) or UDim2.new(0, 430, 0, 400)
-MainFrame.Position = UDim2.new(0.5, IsMobile and -225 or -215, 0.5, IsMobile and -210 or -200)
+MainFrame.Size = IsMobile and UDim2.new(0, 420, 0, 500) or UDim2.new(0, 400, 0, 470)
+MainFrame.Position = UDim2.new(0.5, IsMobile and -210 or -200, 0.5, IsMobile and -250 or -235)
 MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
