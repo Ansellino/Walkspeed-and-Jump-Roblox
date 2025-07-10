@@ -31,7 +31,7 @@ local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 -- Ukuran responsif: lebih besar di mobile dengan tinggi yang disesuaikan untuk jump controls
 MainFrame.Size = IsMobile and UDim2.new(0, 420, 0, 400) or UDim2.new(0, 400, 0, 380)
-MainFrame.Position = UDim2.new(0.5, IsMobile and -210 or -200, 0.5, IsMobile and -230 or -220)
+MainFrame.Position = UDim2.new(0.5, IsMobile and -210 or -200, 0.5, IsMobile and -200 or -190)
 MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
