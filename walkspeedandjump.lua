@@ -392,18 +392,18 @@ local ToggleJumpCorner = Instance.new("UICorner")
 ToggleJumpCorner.CornerRadius = UDim.new(0, 8)
 ToggleJumpCorner.Parent = ToggleJumpButton
 
--- Hide Button (di dalam UI) dengan posisi yang lebih rapi
-local HideButton = Instance.new("TextButton")
-HideButton.Name = "HideButton"
-HideButton.Size = UDim2.new(0, 90, 0, 30)
-HideButton.Position = UDim2.new(0.5, -45, 1, -35)
-HideButton.BackgroundColor3 = Color3.fromRGB(180, 100, 100)
-HideButton.Text = "Hide UI"
-HideButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-HideButton.TextScaled = true
-HideButton.Font = Enum.Font.SourceSansBold
-HideButton.BorderSizePixel = 0
-HideButton.Parent = MainFrame
+-- -- Hide Button (di dalam UI) dengan posisi yang lebih rapi
+-- local HideButton = Instance.new("TextButton")
+-- HideButton.Name = "HideButton"
+-- HideButton.Size = UDim2.new(0, 90, 0, 30)
+-- HideButton.Position = UDim2.new(0.5, -45, 1, -35)
+-- HideButton.BackgroundColor3 = Color3.fromRGB(180, 100, 100)
+-- HideButton.Text = "Hide UI"
+-- HideButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+-- HideButton.TextScaled = true
+-- HideButton.Font = Enum.Font.SourceSansBold
+-- HideButton.BorderSizePixel = 0
+-- HideButton.Parent = MainFrame
 
 local HideCorner = Instance.new("UICorner")
 HideCorner.CornerRadius = UDim.new(0, 8)
