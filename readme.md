@@ -17,7 +17,7 @@ A modern, responsive GUI script for controlling walkspeed and jump power in Robl
 ### Quick Load
 
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Ansellino/roblox/main/walkspeedandjump.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Ansellino/walkspeed-and-jump-roblox/main/walkspeedandjump.lua"))()
 ```
 
 ### Controls
