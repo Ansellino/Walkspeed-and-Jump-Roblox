@@ -221,16 +221,16 @@ JumpLabel.Font = Enum.Font.SourceSansBold
 JumpLabel.Parent = ContentFrame
 
 -- Jump Value Display
-local JumpValueLabel = Instance.new("TextLabel")
-JumpValueLabel.Name = "JumpValueLabel"
-JumpValueLabel.Size = UDim2.new(1, 0, 0, 20)
-JumpValueLabel.Position = UDim2.new(0, 0, 0, 155)
-JumpValueLabel.BackgroundTransparency = 1
+-- local JumpValueLabel = Instance.new("TextLabel")
+-- JumpValueLabel.Name = "JumpValueLabel"
+-- JumpValueLabel.Size = UDim2.new(1, 0, 0, 20)
+-- JumpValueLabel.Position = UDim2.new(0, 0, 0, 155)
+-- JumpValueLabel.BackgroundTransparency = 1
 -- JumpValueLabel.Text = "Current: " .. CurrentJumpPower
-JumpValueLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-JumpValueLabel.TextScaled = true
-JumpValueLabel.Font = Enum.Font.SourceSans
-JumpValueLabel.Parent = ContentFrame
+-- JumpValueLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+-- JumpValueLabel.TextScaled = true
+-- JumpValueLabel.Font = Enum.Font.SourceSans
+-- JumpValueLabel.Parent = ContentFrame
 
 -- Jump Slider Background
 local JumpSliderBG = Instance.new("Frame")
@@ -356,17 +356,17 @@ DecreaseCorner.CornerRadius = UDim.new(0, 8)
 DecreaseCorner.Parent = DecreaseButton
 
 -- Speed Display dalam speed control
-local SpeedDisplay = Instance.new("TextLabel")
-SpeedDisplay.Name = "SpeedDisplay"
-SpeedDisplay.Size = IsMobile and UDim2.new(1, -110, 0, 30) or UDim2.new(1, -90, 0, 25)
-SpeedDisplay.Position = IsMobile and UDim2.new(0, 55, 0.5, -15) or UDim2.new(0, 45, 0.5, -12.5)
-SpeedDisplay.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-SpeedDisplay.Text = "Speed: " .. math.floor(CurrentWalkspeed)
-SpeedDisplay.TextColor3 = Color3.fromRGB(255, 255, 255)
-SpeedDisplay.TextScaled = true
-SpeedDisplay.Font = Enum.Font.SourceSansBold
-SpeedDisplay.BorderSizePixel = 0
-SpeedDisplay.Parent = SpeedControlFrame
+-- local SpeedDisplay = Instance.new("TextLabel")
+-- SpeedDisplay.Name = "SpeedDisplay"
+-- SpeedDisplay.Size = IsMobile and UDim2.new(1, -110, 0, 30) or UDim2.new(1, -90, 0, 25)
+-- SpeedDisplay.Position = IsMobile and UDim2.new(0, 55, 0.5, -15) or UDim2.new(0, 45, 0.5, -12.5)
+-- peedDisplay.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+-- SpeedDisplay.Text = "Speed: " .. math.floor(CurrentWalkspeed)
+-- SpeedDisplay.TextColor3 = Color3.fromRGB(255, 255, 255)
+-- SpeedDisplay.TextScaled = true
+-- SpeedDisplay.Font = Enum.Font.SourceSansBold
+-- SpeedDisplay.BorderSizePixel = 0
+-- SpeedDisplay.Parent = SpeedControlFrame
 
 local SpeedDisplayCorner = Instance.new("UICorner")
 SpeedDisplayCorner.CornerRadius = UDim.new(0, 6)
