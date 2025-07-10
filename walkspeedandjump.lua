@@ -518,8 +518,8 @@ ShowCorner.Parent = ShowButton
 -- Floating Jump Button
 local JumpButton = Instance.new("TextButton")
 JumpButton.Name = "JumpButton"
-JumpButton.Size = IsMobile and UDim2.new(0, 80, 0, 80) or UDim2.new(0, 70, 0, 70)
-JumpButton.Position = IsMobile and UDim2.new(1, -100, 1, -100) or UDim2.new(1, -90, 1, -90)
+JumpButton.Size = IsMobile and UDim2.new(0, 100, 0, 100) or UDim2.new(0, 90, 0, 90)
+JumpButton.Position = IsMobile and UDim2.new(1, -130, 1, -130) or UDim2.new(1, -120, 1, -120)
 JumpButton.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
 JumpButton.Text = "JUMP"
 JumpButton.TextColor3 = Color3.fromRGB(255, 255, 255)
