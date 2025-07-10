@@ -30,9 +30,9 @@ ScreenGui.Parent = game:GetService("CoreGui") or LocalPlayer:WaitForChild("Playe
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 -- Ukuran responsif: lebih besar di mobile dengan tinggi yang disesuaikan untuk jump controls
-MainFrame.Size = IsMobile and UDim2.new(0, 370, 0, 380) or UDim2.new(0, 320, 0, 360)
-MainFrame.Position = UDim2.new(0.5, IsMobile and -185 or -160, 0.5, IsMobile and -190 or -180)
-MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+MainFrame.Size = IsMobile and UDim2.new(0, 350, 0, 400) or UDim2.new(0, 320, 0, 380)
+MainFrame.Position = UDim2.new(0.5, IsMobile and -175 or -160, 0.5, IsMobile and -200 or -190)
+MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
 MainFrame.Draggable = true
@@ -46,11 +46,26 @@ UICorner.Parent = MainFrame
 -- Gradient Background untuk main frame
 local MainGradient = Instance.new("UIGradient")
 MainGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 35, 35)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 25, 25))
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 30, 30)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
 }
 MainGradient.Rotation = 45
 MainGradient.Parent = MainFrame
+
+-- Shadow effect untuk main frame
+local Shadow = Instance.new("Frame")
+Shadow.Name = "Shadow"
+Shadow.Size = UDim2.new(1, 6, 1, 6)
+Shadow.Position = UDim2.new(0, -3, 0, -3)
+Shadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Shadow.BackgroundTransparency = 0.8
+Shadow.BorderSizePixel = 0
+Shadow.ZIndex = -1
+Shadow.Parent = MainFrame
+
+local ShadowCorner = Instance.new("UICorner")
+ShadowCorner.CornerRadius = UDim.new(0, 15)
+ShadowCorner.Parent = Shadow
 
 
 
@@ -116,7 +131,7 @@ CloseCorner.Parent = CloseButton
 -- Content Frame
 local ContentFrame = Instance.new("Frame")
 ContentFrame.Name = "ContentFrame"
-ContentFrame.Size = UDim2.new(1, -20, 1, -85)
+ContentFrame.Size = UDim2.new(1, -20, 1, -60)
 ContentFrame.Position = UDim2.new(0, 10, 0, 50)
 ContentFrame.BackgroundTransparency = 1
 ContentFrame.Parent = MainFrame
@@ -124,20 +139,32 @@ ContentFrame.Parent = MainFrame
 -- Speed Label
 local SpeedLabel = Instance.new("TextLabel")
 SpeedLabel.Name = "SpeedLabel"
-SpeedLabel.Size = UDim2.new(1, 0, 0, 30)
+SpeedLabel.Size = UDim2.new(1, 0, 0, 25)
 SpeedLabel.Position = UDim2.new(0, 0, 0, 0)
 SpeedLabel.BackgroundTransparency = 1
-SpeedLabel.Text = "Current Speed: " .. CurrentWalkspeed
-SpeedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedLabel.Text = "💨 Speed Control"
+SpeedLabel.TextColor3 = Color3.fromRGB(100, 170, 255)
 SpeedLabel.TextScaled = true
-SpeedLabel.Font = Enum.Font.SourceSans
+SpeedLabel.Font = Enum.Font.SourceSansBold
 SpeedLabel.Parent = ContentFrame
+
+-- Speed Value Display
+local SpeedValueLabel = Instance.new("TextLabel")
+SpeedValueLabel.Name = "SpeedValueLabel"
+SpeedValueLabel.Size = UDim2.new(1, 0, 0, 20)
+SpeedValueLabel.Position = UDim2.new(0, 0, 0, 25)
+SpeedValueLabel.BackgroundTransparency = 1
+SpeedValueLabel.Text = "Current: " .. CurrentWalkspeed
+SpeedValueLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+SpeedValueLabel.TextScaled = true
+SpeedValueLabel.Font = Enum.Font.SourceSans
+SpeedValueLabel.Parent = ContentFrame
 
 -- Slider Background
 local SliderBG = Instance.new("Frame")
 SliderBG.Name = "SliderBackground"
 SliderBG.Size = UDim2.new(1, 0, 0, 20)
-SliderBG.Position = UDim2.new(0, 0, 0, 40)
+SliderBG.Position = UDim2.new(0, 0, 0, 50)
 SliderBG.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 SliderBG.BorderSizePixel = 0
 SliderBG.Parent = ContentFrame
@@ -176,19 +203,31 @@ SliderButtonCorner.Parent = SliderButton
 local JumpLabel = Instance.new("TextLabel")
 JumpLabel.Name = "JumpLabel"
 JumpLabel.Size = UDim2.new(1, 0, 0, 25)
-JumpLabel.Position = UDim2.new(0, 0, 0, 120)
+JumpLabel.Position = UDim2.new(0, 0, 0, 130)
 JumpLabel.BackgroundTransparency = 1
-JumpLabel.Text = "Jump Power: " .. CurrentJumpPower
-JumpLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+JumpLabel.Text = "🚀 Jump Power Control"
+JumpLabel.TextColor3 = Color3.fromRGB(255, 170, 50)
 JumpLabel.TextScaled = true
-JumpLabel.Font = Enum.Font.SourceSans
+JumpLabel.Font = Enum.Font.SourceSansBold
 JumpLabel.Parent = ContentFrame
+
+-- Jump Value Display
+local JumpValueLabel = Instance.new("TextLabel")
+JumpValueLabel.Name = "JumpValueLabel"
+JumpValueLabel.Size = UDim2.new(1, 0, 0, 20)
+JumpValueLabel.Position = UDim2.new(0, 0, 0, 155)
+JumpValueLabel.BackgroundTransparency = 1
+JumpValueLabel.Text = "Current: " .. CurrentJumpPower
+JumpValueLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+JumpValueLabel.TextScaled = true
+JumpValueLabel.Font = Enum.Font.SourceSans
+JumpValueLabel.Parent = ContentFrame
 
 -- Jump Slider Background
 local JumpSliderBG = Instance.new("Frame")
 JumpSliderBG.Name = "JumpSliderBackground"
 JumpSliderBG.Size = UDim2.new(1, 0, 0, 20)
-JumpSliderBG.Position = UDim2.new(0, 0, 0, 150)
+JumpSliderBG.Position = UDim2.new(0, 0, 0, 180)
 JumpSliderBG.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 JumpSliderBG.BorderSizePixel = 0
 JumpSliderBG.Parent = ContentFrame
@@ -226,7 +265,7 @@ JumpSliderButtonCorner.Parent = JumpSliderButton
 local JumpControlFrame = Instance.new("Frame")
 JumpControlFrame.Name = "JumpControlFrame"
 JumpControlFrame.Size = UDim2.new(1, 0, 0, 40)
-JumpControlFrame.Position = UDim2.new(0, 0, 0, 180)
+JumpControlFrame.Position = UDim2.new(0, 0, 0, 210)
 JumpControlFrame.BackgroundTransparency = 1
 JumpControlFrame.Parent = ContentFrame
 
@@ -286,7 +325,7 @@ IncreaseJumpCorner.Parent = IncreaseJumpButton
 local SpeedControlFrame = Instance.new("Frame")
 SpeedControlFrame.Name = "SpeedControlFrame"
 SpeedControlFrame.Size = UDim2.new(1, 0, 0, 40)
-SpeedControlFrame.Position = UDim2.new(0, 0, 0, 70)
+SpeedControlFrame.Position = UDim2.new(0, 0, 0, 80)
 SpeedControlFrame.BackgroundTransparency = 1
 SpeedControlFrame.Parent = ContentFrame
 
@@ -345,7 +384,7 @@ IncreaseCorner.Parent = IncreaseButton
 local ResetButton = Instance.new("TextButton")
 ResetButton.Name = "ResetButton"
 ResetButton.Size = UDim2.new(0.45, -5, 0, 35)
-ResetButton.Position = UDim2.new(0, 0, 0, 230)
+ResetButton.Position = UDim2.new(0, 0, 0, 260)
 ResetButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 ResetButton.Text = "Reset"
 ResetButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -358,11 +397,20 @@ local ResetCorner = Instance.new("UICorner")
 ResetCorner.CornerRadius = UDim.new(0, 8)
 ResetCorner.Parent = ResetButton
 
+-- Gradient untuk Reset Button
+local ResetGradient = Instance.new("UIGradient")
+ResetGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(70, 70, 70)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 50, 50))
+}
+ResetGradient.Rotation = 90
+ResetGradient.Parent = ResetButton
+
 -- Apply Button
 local ApplyButton = Instance.new("TextButton")
 ApplyButton.Name = "ApplyButton"
 ApplyButton.Size = UDim2.new(0.45, -5, 0, 35)
-ApplyButton.Position = UDim2.new(0.55, 5, 0, 230)
+ApplyButton.Position = UDim2.new(0.55, 5, 0, 260)
 ApplyButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
 ApplyButton.Text = "Apply"
 ApplyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -375,11 +423,20 @@ local ApplyCorner = Instance.new("UICorner")
 ApplyCorner.CornerRadius = UDim.new(0, 8)
 ApplyCorner.Parent = ApplyButton
 
+-- Gradient untuk Apply Button
+local ApplyGradient = Instance.new("UIGradient")
+ApplyGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 190, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 150, 200))
+}
+ApplyGradient.Rotation = 90
+ApplyGradient.Parent = ApplyButton
+
 -- Toggle Jump Button
 local ToggleJumpButton = Instance.new("TextButton")
 ToggleJumpButton.Name = "ToggleJumpButton"
 ToggleJumpButton.Size = UDim2.new(1, 0, 0, 30)
-ToggleJumpButton.Position = UDim2.new(0, 0, 0, 275)
+ToggleJumpButton.Position = UDim2.new(0, 0, 0, 305)
 ToggleJumpButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 ToggleJumpButton.Text = "Hide Jump Button"
 ToggleJumpButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -392,11 +449,20 @@ local ToggleJumpCorner = Instance.new("UICorner")
 ToggleJumpCorner.CornerRadius = UDim.new(0, 8)
 ToggleJumpCorner.Parent = ToggleJumpButton
 
+-- Gradient untuk Toggle Jump Button
+local ToggleJumpGradient = Instance.new("UIGradient")
+ToggleJumpGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(120, 120, 120)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(80, 80, 80))
+}
+ToggleJumpGradient.Rotation = 90
+ToggleJumpGradient.Parent = ToggleJumpButton
+
 -- Hide UI Button (di dalam content frame, di atas hide button utama)
 local HideUIButton = Instance.new("TextButton")
 HideUIButton.Name = "HideUIButton"
-HideUIButton.Size = UDim2.new(1, 0, 0, 25)
-HideUIButton.Position = UDim2.new(0, 0, 0, 310)
+HideUIButton.Size = UDim2.new(1, 0, 0, 30)
+HideUIButton.Position = UDim2.new(0, 0, 0, 345)
 HideUIButton.BackgroundColor3 = Color3.fromRGB(120, 120, 120)
 HideUIButton.Text = "Hide Interface"
 HideUIButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -473,7 +539,7 @@ JumpButtonGradient.Parent = JumpButton
 -- Functions
 local function UpdateWalkspeed(speed)
     CurrentWalkspeed = math.clamp(speed, 0, 200)
-    SpeedLabel.Text = "Current Speed: " .. math.floor(CurrentWalkspeed)
+    SpeedValueLabel.Text = "Current: " .. math.floor(CurrentWalkspeed)
     SpeedDisplay.Text = "Speed: " .. math.floor(CurrentWalkspeed)
     
     local percentage = (CurrentWalkspeed - 0) / 200
@@ -483,7 +549,7 @@ end
 
 local function UpdateJumpPower(jumpPower)
     CurrentJumpPower = math.clamp(jumpPower, 0, 500)
-    JumpLabel.Text = "Jump Power: " .. math.floor(CurrentJumpPower)
+    JumpValueLabel.Text = "Current: " .. math.floor(CurrentJumpPower)
     JumpDisplay.Text = "Jump: " .. math.floor(CurrentJumpPower)
     
     local percentage = (CurrentJumpPower - 0) / 500
@@ -521,25 +587,25 @@ local function ResetWalkspeed()
 end
 
 local function IncreaseSpeed()
-    local newSpeed = CurrentWalkspeed + 2
+    local newSpeed = CurrentWalkspeed + 1
     UpdateWalkspeed(newSpeed)
     ApplyWalkspeed()
 end
 
 local function DecreaseSpeed()
-    local newSpeed = CurrentWalkspeed - 2
+    local newSpeed = CurrentWalkspeed - 1
     UpdateWalkspeed(newSpeed)
     ApplyWalkspeed()
 end
 
 local function IncreaseJump()
-    local newJumpPower = CurrentJumpPower + 10
+    local newJumpPower = CurrentJumpPower + 1
     UpdateJumpPower(newJumpPower)
     ApplyJumpPower()
 end
 
 local function DecreaseJump()
-    local newJumpPower = CurrentJumpPower - 10
+    local newJumpPower = CurrentJumpPower - 1
     UpdateJumpPower(newJumpPower)
     ApplyJumpPower()
 end
@@ -729,10 +795,10 @@ local function ButtonHover(button, normalColor, hoverColor)
     end)
 end
 
-ButtonHover(ResetButton, Color3.fromRGB(60, 60, 60), Color3.fromRGB(80, 80, 80))
-ButtonHover(ApplyButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230))
+ButtonHover(ResetButton, Color3.fromRGB(60, 60, 60), Color3.fromRGB(90, 90, 90))
+ButtonHover(ApplyButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 190, 255))
 ButtonHover(CloseButton, Color3.fromRGB(255, 50, 50), Color3.fromRGB(255, 80, 80))
-ButtonHover(HideUIButton, Color3.fromRGB(120, 120, 120), Color3.fromRGB(140, 140, 140))
+ButtonHover(HideUIButton, Color3.fromRGB(120, 120, 120), Color3.fromRGB(150, 150, 150))
 ButtonHover(ShowButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230))
 ButtonHover(IncreaseButton, Color3.fromRGB(100, 255, 100), Color3.fromRGB(120, 255, 120))
 ButtonHover(DecreaseButton, Color3.fromRGB(255, 100, 100), Color3.fromRGB(255, 120, 120))
@@ -741,7 +807,7 @@ ButtonHover(DecreaseJumpButton, Color3.fromRGB(255, 140, 0), Color3.fromRGB(255,
 
 -- Special hover effect untuk ToggleJumpButton
 ToggleJumpButton.MouseEnter:Connect(function()
-    local targetColor = JumpButtonVisible and Color3.fromRGB(120, 120, 120) or Color3.fromRGB(255, 190, 30)
+    local targetColor = JumpButtonVisible and Color3.fromRGB(140, 140, 140) or Color3.fromRGB(255, 190, 30)
     TweenService:Create(ToggleJumpButton, TweenInfo.new(0.2), {BackgroundColor3 = targetColor}):Play()
 end)
 
