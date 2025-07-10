@@ -158,16 +158,16 @@ SpeedLabel.Font = Enum.Font.SourceSansBold
 SpeedLabel.Parent = ContentFrame
 
 -- Speed Value Display
--- local SpeedValueLabel = Instance.new("TextLabel")
--- SpeedValueLabel.Name = "SpeedValueLabel"
--- SpeedValueLabel.Size = UDim2.new(1, 0, 0, 20)
--- SpeedValueLabel.Position = UDim2.new(0, 0, 0, 25)
--- SpeedValueLabel.BackgroundTransparency = 1
--- SpeedValueLabel.Text = "Current: " .. CurrentWalkspeed
--- SpeedValueLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
--- SpeedValueLabel.TextScaled = true
--- SpeedValueLabel.Font = Enum.Font.SourceSans
--- SpeedValueLabel.Parent = ContentFrame
+local SpeedValueLabel = Instance.new("TextLabel")
+SpeedValueLabel.Name = "SpeedValueLabel"
+SpeedValueLabel.Size = UDim2.new(1, 0, 0, 20)
+SpeedValueLabel.Position = UDim2.new(0, 0, 0, 25)
+SpeedValueLabel.BackgroundTransparency = 1
+SpeedValueLabel.Text = "Current: " .. CurrentWalkspeed
+SpeedValueLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+SpeedValueLabel.TextScaled = true
+SpeedValueLabel.Font = Enum.Font.SourceSans
+SpeedValueLabel.Parent = ContentFrame
 
 -- Slider Background
 local SliderBG = Instance.new("Frame")
@@ -221,16 +221,16 @@ JumpLabel.Font = Enum.Font.SourceSansBold
 JumpLabel.Parent = ContentFrame
 
 -- Jump Value Display
--- local JumpValueLabel = Instance.new("TextLabel")
--- JumpValueLabel.Name = "JumpValueLabel"
--- JumpValueLabel.Size = UDim2.new(1, 0, 0, 20)
--- JumpValueLabel.Position = UDim2.new(0, 0, 0, 155)
--- JumpValueLabel.BackgroundTransparency = 1
--- JumpValueLabel.Text = "Current: " .. CurrentJumpPower
--- JumpValueLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
--- JumpValueLabel.TextScaled = true
--- JumpValueLabel.Font = Enum.Font.SourceSans
--- JumpValueLabel.Parent = ContentFrame
+local JumpValueLabel = Instance.new("TextLabel")
+JumpValueLabel.Name = "JumpValueLabel"
+JumpValueLabel.Size = UDim2.new(1, 0, 0, 20)
+JumpValueLabel.Position = UDim2.new(0, 0, 0, 155)
+JumpValueLabel.BackgroundTransparency = 1
+JumpValueLabel.Text = "Current: " .. CurrentJumpPower
+JumpValueLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+JumpValueLabel.TextScaled = true
+JumpValueLabel.Font = Enum.Font.SourceSans
+JumpValueLabel.Parent = ContentFrame
 
 -- Jump Slider Background
 local JumpSliderBG = Instance.new("Frame")
@@ -355,7 +355,7 @@ local DecreaseCorner = Instance.new("UICorner")
 DecreaseCorner.CornerRadius = UDim.new(0, 8)
 DecreaseCorner.Parent = DecreaseButton
 
-Speed Display dalam speed control
+-- Speed Display dalam speed control
 local SpeedDisplay = Instance.new("TextLabel")
 SpeedDisplay.Name = "SpeedDisplay"
 SpeedDisplay.Size = IsMobile and UDim2.new(1, -110, 0, 30) or UDim2.new(1, -90, 0, 25)
