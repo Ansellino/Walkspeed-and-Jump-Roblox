@@ -392,18 +392,44 @@ local ToggleJumpCorner = Instance.new("UICorner")
 ToggleJumpCorner.CornerRadius = UDim.new(0, 8)
 ToggleJumpCorner.Parent = ToggleJumpButton
 
--- -- Hide Button (di dalam UI) dengan posisi yang lebih rapi
--- local HideButton = Instance.new("TextButton")
--- HideButton.Name = "HideButton"
--- HideButton.Size = UDim2.new(0, 90, 0, 30)
--- HideButton.Position = UDim2.new(0.5, -45, 1, -35)
--- HideButton.BackgroundColor3 = Color3.fromRGB(180, 100, 100)
--- HideButton.Text = "Hide UI"
--- HideButton.TextColor3 = Color3.fromRGB(255, 255, 255)
--- HideButton.TextScaled = true
--- HideButton.Font = Enum.Font.SourceSansBold
--- HideButton.BorderSizePixel = 0
--- HideButton.Parent = MainFrame
+-- Hide UI Button (di dalam content frame, di atas hide button utama)
+local HideUIButton = Instance.new("TextButton")
+HideUIButton.Name = "HideUIButton"
+HideUIButton.Size = UDim2.new(1, 0, 0, 25)
+HideUIButton.Position = UDim2.new(0, 0, 0, 310)
+HideUIButton.BackgroundColor3 = Color3.fromRGB(120, 120, 120)
+HideUIButton.Text = "Hide Interface"
+HideUIButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+HideUIButton.TextScaled = true
+HideUIButton.Font = Enum.Font.SourceSansBold
+HideUIButton.BorderSizePixel = 0
+HideUIButton.Parent = ContentFrame
+
+local HideUICorner = Instance.new("UICorner")
+HideUICorner.CornerRadius = UDim.new(0, 8)
+HideUICorner.Parent = HideUIButton
+
+-- Gradient untuk hide UI button
+local HideUIGradient = Instance.new("UIGradient")
+HideUIGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 140, 140)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 100, 100))
+}
+HideUIGradient.Rotation = 90
+HideUIGradient.Parent = HideUIButton
+
+-- Hide Button (di paling bawah MainFrame)
+local HideButton = Instance.new("TextButton")
+HideButton.Name = "HideButton"
+HideButton.Size = UDim2.new(0, 90, 0, 30)
+HideButton.Position = UDim2.new(0.5, -45, 1, -35)
+HideButton.BackgroundColor3 = Color3.fromRGB(180, 100, 100)
+HideButton.Text = "Hide UI"
+HideButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+HideButton.TextScaled = true
+HideButton.Font = Enum.Font.SourceSansBold
+HideButton.BorderSizePixel = 0
+HideButton.Parent = MainFrame
 
 local HideCorner = Instance.new("UICorner")
 HideCorner.CornerRadius = UDim.new(0, 8)
@@ -692,6 +718,7 @@ ResetButton.MouseButton1Click:Connect(ResetWalkspeed)
 ApplyButton.MouseButton1Click:Connect(ApplyAll)
 CloseButton.MouseButton1Click:Connect(ToggleUI)
 HideButton.MouseButton1Click:Connect(HideUI)
+HideUIButton.MouseButton1Click:Connect(HideUI)
 ShowButton.MouseButton1Click:Connect(ShowUI)
 IncreaseButton.MouseButton1Click:Connect(IncreaseSpeed)
 DecreaseButton.MouseButton1Click:Connect(DecreaseSpeed)
@@ -731,6 +758,7 @@ ButtonHover(ResetButton, Color3.fromRGB(60, 60, 60), Color3.fromRGB(80, 80, 80))
 ButtonHover(ApplyButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230))
 ButtonHover(CloseButton, Color3.fromRGB(255, 50, 50), Color3.fromRGB(255, 80, 80))
 ButtonHover(HideButton, Color3.fromRGB(180, 100, 100), Color3.fromRGB(200, 120, 120))
+ButtonHover(HideUIButton, Color3.fromRGB(120, 120, 120), Color3.fromRGB(140, 140, 140))
 ButtonHover(ShowButton, Color3.fromRGB(0, 170, 255), Color3.fromRGB(0, 150, 230))
 ButtonHover(IncreaseButton, Color3.fromRGB(100, 255, 100), Color3.fromRGB(120, 255, 120))
 ButtonHover(DecreaseButton, Color3.fromRGB(255, 100, 100), Color3.fromRGB(255, 120, 120))
