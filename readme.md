@@ -5,7 +5,7 @@ A modern, responsive GUI script for controlling walkspeed and jump power in Robl
 ## Features
 
 - **Speed Control**: Adjust walkspeed from 0 to 200 with slider and buttons
-- **Jump Power Control**: Modify jump power from 0 to 500 with precision controls
+- **Jump Power Control**: Modify jump power from 0 to 1000 with precision controls
 - **Mobile-Friendly**: Responsive design optimized for both desktop and mobile devices
 - **Modern UI**: Clean interface with gradients, shadows, and smooth animations
 - **Floating Jump Button**: Draggable jump button for quick access
